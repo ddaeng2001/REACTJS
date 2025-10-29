@@ -4,6 +4,7 @@ import './App.css';
 //컴포넌트 연결
 import Component_01 from "./05조건부랜더링/01Component"
 import Component_02 from "./05조건부랜더링/02Component"
+import Component_03 from "./05조건부랜더링/03Component"
 
 function App() {
 
@@ -16,6 +17,8 @@ function App() {
       {/* 삼항연산자 */}
       <Component_02 isAuth={true} />
       {/* && */}
+      <Component_03 items={['aaa','bbb','ccc','ddd']} />
+      {/* 여러 개의 리스트형 데이터 전달 */}
 
  
     </div>
