@@ -1,21 +1,25 @@
+//upload 폼, upload 요청을 위함
+
 import axios from "axios";
 import {useState} from "react";
 import { useNavigate } from 'react-router-dom';
 
 const Upload  = ()=>{
     const navigate = useNavigate();
-    const [files,setFiles] = useState([])
+    const [files,setFiles] = useState([]) // 파일 2개, 3개가 여기에 들어감
 
 
     const fileChangeHandler = (e)=>{
-        console.log(e);
-        console.log(e.target);
-        console.log(e.target.files);
+        // console.log(e);
+        // console.log(e.target);
+        // console.log(e.target.files);
        
         //console.log(e.target.files[0]);
-        for(let idx in e.target.files)
+        for(let idx in e.target.files){
             console.log(e.target.files[idx]);
-        
+        }
+
+
         //유효성 체크(생략)
 
         //
