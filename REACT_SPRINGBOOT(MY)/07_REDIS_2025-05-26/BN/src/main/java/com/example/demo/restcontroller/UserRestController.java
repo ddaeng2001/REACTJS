@@ -78,13 +78,14 @@ public class UserRestController {
     @PostMapping(value = "/login" , consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String,Object>> login(@RequestBody UserDto userDto, HttpServletResponse resp) throws IOException {
         log.info("POST /login..." + userDto);
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new HashMap<>(); // 데이터 주기 위한 작업
 
         try{
             //사용자 인증 시도(ID/PW 일치여부 확인)
+            //확인하고 나온 결과가 authentication으로 반환됨
             Authentication authentication =
                     authenticationManager.authenticate(
-                            new UsernamePasswordAuthenticationToken(userDto.getUsername(),userDto.getPassword())
+                            new UsernamePasswordAuthenticationToken(userDto.getUsername(),userDto.getPassword()) //Token 객체로 받아서 PW 인증
                     );
             System.out.println("인증성공 : " + authentication);
 
@@ -99,9 +100,12 @@ public class UserRestController {
             response.put("message","인증성공!");
 
             //---------------------------------------------
+            //access token은 cookie화해서 보안 적용 - JS에서 함부로 접근하지 못하도록 처리
             Cookie accessCookie = new Cookie(JwtProperties.ACCESS_TOKEN_COOKIE_NAME, tokenInfo.getAccessToken());
-            accessCookie.setHttpOnly(true);
-            accessCookie.setSecure(false); // Only for HTTPS
+
+            //📍중요📍
+            accessCookie.setHttpOnly(true); //쿠키보안관련 처리 - FN 수준에서의 쿠키 전달 시 접근 제한 (필수!)
+            accessCookie.setSecure(false); // Only for HTTPS - 쿠키를 전달할 때 인증서 기반 접근 허용
             accessCookie.setPath("/"); // Define valid paths
             accessCookie.setMaxAge(JwtProperties.ACCESS_TOKEN_EXPIRATION_TIME); // 1 hour expiration
 

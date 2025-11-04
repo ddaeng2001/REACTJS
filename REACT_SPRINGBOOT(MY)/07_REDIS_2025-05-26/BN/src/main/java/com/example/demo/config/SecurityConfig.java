@@ -101,9 +101,9 @@ public class SecurityConfig {
 
 		//JWT FILTER ADD
 		http.addFilterBefore(new JwtAuthorizationFilter(userRepository,jwtTokenProvider,jwtTokenRepository,redisUtil), LogoutFilter.class);
-		//-----------------------------------------------
-		//[추가] CORS
-		//-----------------------------------------------
+		//-----------------------------------------------------------------------
+		//[추가] CORS - 다른 domain(react)에서 넘어오기 때문에 security 수준에서 설정해줌
+		//-----------------------------------------------------------------------
 		http.cors((config)->{
 			config.configurationSource(corsConfigurationSource());
 		});

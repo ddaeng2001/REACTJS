@@ -12,7 +12,10 @@ const Login  = ()=>{
       try {
         // 토큰 유효성 검증을 위한 별도 엔드포인트 호출
         const resp = await axios.get("http://localhost:8090/validate", {
-          withCredentials: true,
+
+          withCredentials: true, 
+          //★ 파라미터 옵션으로 꼭 넣어줘야 토큰전달가능★
+          //쿠키형태의 토큰을 전달하는 옵션
         });
         console.log("토큰 검증 성공:", resp);
         navigate("/"); // 성공 시 / 경로로 이동
